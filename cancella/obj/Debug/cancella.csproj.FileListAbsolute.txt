@@ -1,0 +1,16 @@
+C:\Users\Utente\source\repos\cancella\cancella\bin\Debug\cancella.exe.config
+C:\Users\Utente\source\repos\cancella\cancella\bin\Debug\cancella.exe
+C:\Users\Utente\source\repos\cancella\cancella\bin\Debug\cancella.pdb
+C:\Users\Utente\source\repos\cancella\cancella\obj\Debug\cancella.csproj.AssemblyReference.cache
+C:\Users\Utente\source\repos\cancella\cancella\obj\Debug\cancella.Form1.resources
+C:\Users\Utente\source\repos\cancella\cancella\obj\Debug\cancella.Properties.Resources.resources
+C:\Users\Utente\source\repos\cancella\cancella\obj\Debug\cancella.csproj.GenerateResource.cache
+C:\Users\Utente\source\repos\cancella\cancella\obj\Debug\cancella.csproj.CoreCompileInputs.cache
+C:\Users\Utente\source\repos\cancella\cancella\obj\Debug\cancella.exe
+C:\Users\Utente\source\repos\cancella\cancella\obj\Debug\cancella.pdb
+C:\Users\Utente\source\repos\cancella\cancella\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Utente\source\repos\cancella\cancella\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Utente\source\repos\cancella\cancella\obj\Debug\cancella.csproj.Up2Date
+C:\Users\Utente\source\repos\cancella\cancella\obj\Debug\cancella.Form2.resources
+C:\Users\Utente\source\repos\cancella\cancella\obj\Debug\cancella.Form3.resources
+C:\Users\Utente\source\repos\cancella\cancella\bin\Debug\MetroFramework.dll
