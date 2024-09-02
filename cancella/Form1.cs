@@ -5,84 +5,100 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace cancella
+namespace Applicazione
 {
-    public partial class Form1 : Form
+    public partial class FormPrincipale : Form
     {
-        public string jsonStu = "students.json";
-        public string jsonProf = "prof.json";
-        private List<Studente> studenti;
-        private List<Profe> prof;
+        private readonly string _fileStudenti = "studenti.json";
+        private readonly string _fileProfessori = "professori.json";
+        private List<Studente> _studenti;
+        private List<Professore> _professori;
 
-        public Form1()
+        public FormPrincipale()
         {
             InitializeComponent();
             CaricaStudenti();
-            CaricaProf();
+            CaricaProfessori();
         }
 
-        public void CaricaStudenti()
+        private void CaricaStudenti()
         {
             try
             {
-                var json = File.ReadAllText(jsonStu);
-                studenti = JsonConvert.DeserializeObject<List<Studente>>(json);
+                if (File.Exists(_fileStudenti))
+                {
+                    var json = File.ReadAllText(_fileStudenti);
+                    _studenti = JsonConvert.DeserializeObject<List<Studente>>(json) ?? new List<Studente>();
+                }
+                else
+                {
+                    MessageBox.Show("Il file degli studenti non è stato trovato.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _studenti = new List<Studente>();
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Errore nel caricamento degli studenti: {ex.Message}");
+                MessageBox.Show($"Errore nel caricamento degli studenti: {ex.Message}", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _studenti = new List<Studente>();
             }
         }
 
-        public void CaricaProf()
+        private void CaricaProfessori()
         {
             try
             {
-                var json = File.ReadAllText(jsonProf);
-                prof = JsonConvert.DeserializeObject<List<Profe>>(json);
+                if (File.Exists(_fileProfessori))
+                {
+                    var json = File.ReadAllText(_fileProfessori);
+                    _professori = JsonConvert.DeserializeObject<List<Professore>>(json) ?? new List<Professore>();
+                }
+                else
+                {
+                    MessageBox.Show("Il file dei professori non è stato trovato.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _professori = new List<Professore>();
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Errore nel caricamento dei professori: {ex.Message}");
+                MessageBox.Show($"Errore nel caricamento dei professori: {ex.Message}", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _professori = new List<Professore>();
             }
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private void BottoneLogin_Click(object sender, EventArgs e)
         {
-            string username = nome.Text;
-            string password = password1.Text;
+            var username = testoUsername.Text;
+            var password = testoPassword.Text;
 
             if (int.TryParse(username, out int matricola))
             {
-
-
-
-                var studente = studenti.FirstOrDefault(s => s.Matricola == matricola);
+                var studente = _studenti.FirstOrDefault(s => s.Matricola == matricola);
 
                 if (studente != null)
                 {
-                    Form2 studentForm = new Form2(studente);
-                    studentForm.Show();
-                    this.Hide();
-                    return;
+                    var formStudente = new FormStudente(studente);
+                    formStudente.Show();
+                    Hide();
+                }
+                else
+                {
+                    MessageBox.Show("Studente non trovato.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-
-
-
-                var professore = prof.FirstOrDefault(p => p.Username == username && p.Password == password);
+                var professore = _professori.FirstOrDefault(p => p.Username == username && p.Password == password);
 
                 if (professore != null)
                 {
-                    Form3 profForm = new Form3(professore);
-                    profForm.Show();
-                    this.Hide();
-                    return;
+                    var formProfessore = new FormProfessore(professore);
+                    formProfessore.Show();
+                    Hide();
                 }
-
-                MessageBox.Show("Username o password errati.");
+                else
+                {
+                    MessageBox.Show("Username o password errati.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }
@@ -100,7 +116,7 @@ namespace cancella
         public Dictionary<string, List<int>> Voti { get; set; }
     }
 
-    public class Profe
+    public class Professore
     {
         public string Username { get; set; }
         public string Password { get; set; }

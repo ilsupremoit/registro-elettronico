@@ -14,3 +14,10 @@ C:\Users\Utente\source\repos\cancella\cancella\obj\Debug\cancella.csproj.Up2Date
 C:\Users\Utente\source\repos\cancella\cancella\obj\Debug\cancella.Form2.resources
 C:\Users\Utente\source\repos\cancella\cancella\obj\Debug\cancella.Form3.resources
 C:\Users\Utente\source\repos\cancella\cancella\bin\Debug\MetroFramework.dll
+C:\Users\moustakima adam\Downloads\cancella\cancella\cancella\obj\Debug\cancella.csproj.AssemblyReference.cache
+C:\Users\moustakima adam\Downloads\cancella\cancella\cancella\obj\Debug\Applicazione.FormPrincipale.resources
+C:\Users\moustakima adam\Downloads\cancella\cancella\cancella\obj\Debug\Applicazione.FormStudente.resources
+C:\Users\moustakima adam\Downloads\cancella\cancella\cancella\obj\Debug\Applicazione.FormProfessore.resources
+C:\Users\moustakima adam\Downloads\cancella\cancella\cancella\obj\Debug\cancella.Properties.Resources.resources
+C:\Users\moustakima adam\Downloads\cancella\cancella\cancella\obj\Debug\cancella.csproj.GenerateResource.cache
+C:\Users\moustakima adam\Downloads\cancella\cancella\cancella\obj\Debug\cancella.csproj.CoreCompileInputs.cache

@@ -1,46 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace cancella
+namespace Applicazione
 {
-    public partial class Form2 : Form
+    public partial class FormStudente : Form
     {
-        public Studente studentee;
-        public Form2(Studente stu)
+        private readonly Studente _studente;
+
+        public FormStudente(Studente studente)
         {
-            this.studentee = stu;
+            _studente = studente;
             InitializeComponent();
         }
 
-        private void Form2_Load(object sender, EventArgs e)
+        private void FormStudente_Load(object sender, EventArgs e)
         {
-            label1.Text = $"Matricola: {studentee.Matricola}";
-            label2.Text = $"Nome: {studentee.Nome}";
-            label3.Text = $"Cognome: {studentee.Cognome}";
-            label4.Text = $"Data di Nascita: {studentee.DataNascita.ToShortDateString()}";
-            label6.Text = $"Classe: {studentee.Classe}";
+            etichettaMatricola.Text = $"Matricola: {_studente.Matricola}";
+            etichettaNome.Text = $"Nome: {_studente.Nome}";
+            etichettaCognome.Text = $"Cognome: {_studente.Cognome}";
+            etichettaDataNascita.Text = $"Data di Nascita: {_studente.DataNascita.ToShortDateString()}";
+            etichettaClasse.Text = $"Classe: {_studente.Classe}";
 
-            foreach (var materia in studentee.Voti)
+            foreach (var materia in _studente.Voti)
             {
                 string voti = string.Join(", ", materia.Value);
-                listBox1.Items.Add($"{materia.Key}: {voti}");
+                listaVoti.Items.Add($"{materia.Key}: {voti}");
             }
-
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void BottoneLogout_Click(object sender, EventArgs e)
         {
-            Form1 loginForm = new Form1();
-            loginForm.Show();
-            this.Hide();
-            return;
+            var formPrincipale = new FormPrincipale();
+            formPrincipale.Show();
+            Hide();
         }
     }
 }

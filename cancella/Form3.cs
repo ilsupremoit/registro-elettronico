@@ -5,14 +5,14 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace cancella
+namespace Applicazione
 {
-    public partial class Form3 : Form
+    public partial class FormProfessore : Form
     {
-        private List<Studente> studenti;
-        private string jsonStu = "students.json";
+        private List<Studente> _studenti;
+        private readonly string _fileStudenti = "studenti.json";
 
-        public Form3(Profe prof)
+        public FormProfessore(Professore prof)
         {
             InitializeComponent();
             CaricaStudenti();
@@ -23,12 +23,21 @@ namespace cancella
         {
             try
             {
-                var json = File.ReadAllText(jsonStu);
-                studenti = JsonConvert.DeserializeObject<List<Studente>>(json);
+                if (File.Exists(_fileStudenti))
+                {
+                    var json = File.ReadAllText(_fileStudenti);
+                    _studenti = JsonConvert.DeserializeObject<List<Studente>>(json) ?? new List<Studente>();
+                }
+                else
+                {
+                    MessageBox.Show("Il file degli studenti non è stato trovato.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _studenti = new List<Studente>();
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Errore nel caricamento degli studenti: {ex.Message}");
+                MessageBox.Show($"Errore nel caricamento degli studenti: {ex.Message}", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _studenti = new List<Studente>();
             }
         }
 
@@ -36,7 +45,7 @@ namespace cancella
         {
             dataGridView1.Rows.Clear();
 
-            foreach (var studente in studenti)
+            foreach (var studente in _studenti)
             {
                 foreach (var materia in studente.Voti)
                 {
@@ -48,45 +57,41 @@ namespace cancella
             }
         }
 
-       
-
         private void SalvaStudenti()
         {
             try
             {
-                var json = JsonConvert.SerializeObject(studenti, Formatting.Indented);
-                File.WriteAllText(jsonStu, json);
+                var json = JsonConvert.SerializeObject(_studenti, Formatting.Indented);
+                File.WriteAllText(_fileStudenti, json);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Errore nel salvataggio degli studenti: {ex.Message}");
+                MessageBox.Show($"Errore nel salvataggio degli studenti: {ex.Message}", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void Form3_Load(object sender, EventArgs e)
+        private void FormProfessore_Load(object sender, EventArgs e)
         {
             dataGridView1.ColumnCount = 4;
             dataGridView1.Columns[0].Name = "Matricola";
             dataGridView1.Columns[1].Name = "Nome";
             dataGridView1.Columns[2].Name = "Materia";
             dataGridView1.Columns[3].Name = "Voto";
-
             VisualizzaVoti();
         }
 
-        private void btnEliminaVoto_Click_1(object sender, EventArgs e)
+        private void btnEliminaVoto_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("ciao");
-            if (int.TryParse(textBox1.Text, out int matricola) &&
-                !string.IsNullOrEmpty(textBox2.Text) &&
-                int.TryParse(textBox3.Text, out int voto))
+            if (int.TryParse(textBoxMatricola.Text, out int matricola) &&
+                !string.IsNullOrEmpty(textBoxMateria.Text) &&
+                int.TryParse(textBoxVoto.Text, out int voto))
             {
-                var studente = studenti.FirstOrDefault(s => s.Matricola == matricola);
+                var studente = _studenti.FirstOrDefault(s => s.Matricola == matricola);
                 if (studente != null)
                 {
-                    if (studente.Voti.ContainsKey(textBox2.Text))
+                    if (studente.Voti.ContainsKey(textBoxMateria.Text))
                     {
-                        studente.Voti[textBox2.Text].Remove(voto);
+                        studente.Voti[textBoxMateria.Text].Remove(voto);
 
                         SalvaStudenti();
                         VisualizzaVoti();
@@ -109,18 +114,18 @@ namespace cancella
 
         private void btnAggiungiVoto_Click(object sender, EventArgs e)
         {
-            if (int.TryParse(textBox1.Text, out int matricola) &&
-              !string.IsNullOrEmpty(textBox2.Text) &&
-              int.TryParse(textBox3.Text, out int voto))
+            if (int.TryParse(textBoxMatricola.Text, out int matricola) &&
+              !string.IsNullOrEmpty(textBoxMateria.Text) &&
+              int.TryParse(textBoxVoto.Text, out int voto))
             {
-                var studente = studenti.FirstOrDefault(s => s.Matricola == matricola);
+                var studente = _studenti.FirstOrDefault(s => s.Matricola == matricola);
                 if (studente != null)
                 {
-                    if (!studente.Voti.ContainsKey(textBox2.Text))
+                    if (!studente.Voti.ContainsKey(textBoxMateria.Text))
                     {
-                        studente.Voti[textBox2.Text] = new List<int>();
+                        studente.Voti[textBoxMateria.Text] = new List<int>();
                     }
-                    studente.Voti[textBox2.Text].Add(voto);
+                    studente.Voti[textBoxMateria.Text].Add(voto);
 
                     SalvaStudenti();
                     VisualizzaVoti();
@@ -136,12 +141,11 @@ namespace cancella
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnLogout_Click(object sender, EventArgs e)
         {
             Form1 loginForm = new Form1();
             loginForm.Show();
             this.Hide();
-            return;
         }
     }
 }
